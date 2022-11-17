@@ -3,7 +3,7 @@ import { Module, createLogger, Service } from '@core';
 console.log('module loaded: ', __filename);
 
 export class CatService extends Service {
-  logger = createLogger('ExampleOneModule', 'CatService');
+  logger = createLogger('FooModule', 'CatService');
   code = '101';
 
   say() {
@@ -12,7 +12,7 @@ export class CatService extends Service {
 }
 
 export class DogService extends Service {
-  logger = createLogger('ExampleOneModule', 'DogService');
+  logger = createLogger('FooModule', 'DogService');
   code = '010';
 
   say() {
@@ -20,7 +20,7 @@ export class DogService extends Service {
   }
 }
 
-export class ExampleOneModule extends Module {
+export class FooModule extends Module {
   catService: CatService;
   dogService: DogService;
 
@@ -32,4 +32,4 @@ export class ExampleOneModule extends Module {
   }
 }
 
-export const exampleOneModule = new ExampleOneModule();
+export const fooModule = new FooModule();

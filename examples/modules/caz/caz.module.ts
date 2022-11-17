@@ -1,10 +1,5 @@
-import { Module, createLogger, Service } from '../../__core';
-
-import {
-  CatService,
-  DogService,
-  exampleOneModule,
-} from '../example_one/example_one';
+import { createLogger, Module, Service } from '@core/index';
+import { CatService, DogService, fooModule } from '../foo/foo.module';
 
 console.log('module loaded: ', __filename);
 
@@ -22,16 +17,16 @@ export class RobotService extends Service {
   }
 }
 
-export class ExampleTwoModule extends Module {
+export class CazModule extends Module {
   robotService: RobotService;
 
   constructor() {
     super();
 
-    const { catService, dogService } = exampleOneModule;
+    const { catService, dogService } = fooModule;
 
     this.robotService = new RobotService(catService, dogService);
   }
 }
 
-export const exampleTwoModule = new ExampleTwoModule();
+export const cazModule = new CazModule();

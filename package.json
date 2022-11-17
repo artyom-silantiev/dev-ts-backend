@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/app_example/main"
+    "start:example:modules": "ts-node -r tsconfig-paths/register examples/modules/main"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
