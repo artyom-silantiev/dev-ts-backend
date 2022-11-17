@@ -1,7 +1,5 @@
 import { Class, getClassName } from './stuff';
-
-const symbolModuleTypeId = Symbol('moduleTypeId');
-const symbolModuleImports = Symbol('moduleImports');
+import { symbolModuleImports, symbolModuleTypeId } from './symbols';
 
 export abstract class Module {
   private [symbolModuleImports] = [];
