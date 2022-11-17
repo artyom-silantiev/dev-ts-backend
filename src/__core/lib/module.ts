@@ -1,6 +1,6 @@
 import { Class, getClassName } from './stuff';
 
-export abstract class AppModule {
+export abstract class Module {
   getItemByType<T>(moduleItem: Class<T>) {
     for (const itemKey in this) {
       if (this[itemKey] instanceof moduleItem) {
@@ -13,12 +13,6 @@ export abstract class AppModule {
   }
 }
 
-export enum AppModuleItemType {
-  Router = 0,
-  Controller = 1,
-  Service = 2,
-}
-
 export abstract class ModuleItem {
-  constructor(private __moduleItemType: AppModuleItemType) {}
+  constructor() {}
 }

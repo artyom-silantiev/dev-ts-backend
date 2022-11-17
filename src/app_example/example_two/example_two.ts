@@ -1,4 +1,4 @@
-import { AppModule, createLogger, Service } from '../../__core';
+import { Module, createLogger, Service } from '../../__core';
 
 import {
   CatService,
@@ -22,7 +22,7 @@ export class RobotService extends Service {
   }
 }
 
-export class ExampleTwoModule extends AppModule {
+export class ExampleTwoModule extends Module {
   robotService: RobotService;
 
   constructor() {

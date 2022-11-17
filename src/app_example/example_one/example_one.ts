@@ -1,4 +1,4 @@
-import { AppModule, createLogger, Service } from '@core';
+import { Module, createLogger, Service } from '@core';
 
 console.log('module loaded: ', __filename);
 
@@ -20,7 +20,7 @@ export class DogService extends Service {
   }
 }
 
-export class ExampleOneModule extends AppModule {
+export class ExampleOneModule extends Module {
   catService: CatService;
   dogService: DogService;
 

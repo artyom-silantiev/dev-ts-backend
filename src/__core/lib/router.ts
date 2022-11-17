@@ -1,7 +1,7 @@
-import { ModuleItem, AppModuleItemType } from './app_module';
+import { ModuleItem } from './module';
 
 export abstract class Router extends ModuleItem {
   constructor() {
-    super(AppModuleItemType.Router);
+    super();
   }
 }
