@@ -1,22 +1,14 @@
-import { AppModule, createLogger, Service } from '@core';
-
-console.log('EXAMPLE MODULE IMPORTED !!!');
+import { AppModule, Service } from '@core';
 
 export class CatService extends Service {
-  logger = createLogger('CatService');
-  code = '101';
-
   say() {
-    this.logger.log('its cat');
+    console.log('its cat');
   }
 }
 
 export class DogService extends Service {
-  logger = createLogger('DogService');
-  code = '010';
-
   say() {
-    this.logger.log('its dog');
+    console.log('its dog');
   }
 }
 
