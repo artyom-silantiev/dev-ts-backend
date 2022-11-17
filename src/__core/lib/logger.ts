@@ -1,7 +1,11 @@
 import * as moment from 'moment';
 
 export class Logger {
-  constructor(private name: string = '') {}
+  private name: string;
+
+  constructor(...nameArgs: string[]) {
+    this.name = nameArgs.join('::');
+  }
 
   private defPrefix() {
     return `${moment.utc().format('YYYY-MM-DD HH:mm:ss')}${
@@ -20,6 +24,6 @@ export class Logger {
   }
 }
 
-export function createLogger(name: string = '') {
-  return new Logger(name);
+export function createLogger(...nameArgs: string[]) {
+  return new Logger(...nameArgs);
 }

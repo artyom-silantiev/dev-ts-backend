@@ -1,9 +1,9 @@
 import { AppModule, createLogger, Service } from '@core';
 
-console.log('EXAMPLE MODULE IMPORTED !!!');
+console.log('module loaded: ', __filename);
 
 export class CatService extends Service {
-  logger = createLogger('CatService');
+  logger = createLogger('ExampleOneModule', 'CatService');
   code = '101';
 
   say() {
@@ -12,7 +12,7 @@ export class CatService extends Service {
 }
 
 export class DogService extends Service {
-  logger = createLogger('DogService');
+  logger = createLogger('ExampleOneModule', 'DogService');
   code = '010';
 
   say() {
@@ -20,7 +20,7 @@ export class DogService extends Service {
   }
 }
 
-export class ExampleModule extends AppModule {
+export class ExampleOneModule extends AppModule {
   catService: CatService;
   dogService: DogService;
 
@@ -32,4 +32,4 @@ export class ExampleModule extends AppModule {
   }
 }
 
-export const exampleModule = new ExampleModule();
+export const exampleOneModule = new ExampleOneModule();

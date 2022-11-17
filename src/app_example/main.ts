@@ -1,6 +1,12 @@
-import { exampleModule, CatService } from './example/example';
-import { example2Module, RobotService } from './example2/example';
+import {
+  exampleOneModule,
+  CatService,
+  DogService,
+} from './example_one/example_one';
+import { exampleTwoModule, RobotService } from './example_two/example_two';
 
-exampleModule.getItemByType(CatService).say();
-example2Module.getItemByType(RobotService).say();
-example2Module.getItemByType(CatService).say();
+exampleOneModule.getItemByType(CatService).say();
+exampleOneModule.getItemByType(DogService).say();
+
+exampleTwoModule.getItemByType(RobotService).say();
+exampleTwoModule.getItemByType(CatService).say();
