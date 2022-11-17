@@ -1,6 +1,16 @@
-import { Controller, Module, ModuleItem, Router, Service } from '@core';
-import { cazModule, RobotService } from './caz/caz.module';
-import { CatService, DogService, FooModule, fooModule } from './foo/foo.module';
+import {
+  Controller,
+  Module,
+  ModuleItem,
+  Router,
+  Service,
+  useModule,
+} from '@core';
+import { CazModule, RobotService } from './caz/caz.module';
+import { CatService, DogService, FooModule } from './foo/foo.module';
+
+const fooModule = useModule(FooModule);
+const cazModule = useModule(CazModule);
 
 console.log();
 fooModule.getItemByType(CatService).say();

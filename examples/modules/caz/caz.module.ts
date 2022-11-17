@@ -1,5 +1,5 @@
-import { createLogger, Module, Service } from '@core';
-import { CatService, DogService, fooModule } from '../foo/foo.module';
+import { createLogger, Module, Service, useModuleForImport } from '@core';
+import { CatService, DogService, FooModule } from '../foo/foo.module';
 
 console.log('module loaded: ', __filename);
 
@@ -23,10 +23,8 @@ export class CazModule extends Module {
   constructor() {
     super();
 
-    const { catService, dogService } = fooModule;
+    const { catService, dogService } = useModuleForImport(this, FooModule);
 
     this.robotService = new RobotService(catService, dogService);
   }
 }
-
-export const cazModule = new CazModule();

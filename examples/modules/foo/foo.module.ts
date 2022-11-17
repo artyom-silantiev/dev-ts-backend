@@ -31,5 +31,3 @@ export class FooModule extends Module {
     this.dogService = new DogService();
   }
 }
-
-export const fooModule = new FooModule();
