@@ -19,4 +19,4 @@ console.log('dogService is ModuleItem', dogService instanceof ModuleItem);
 
 console.log();
 cazModule.getItemByType(RobotService).say();
-cazModule.getItemByType(CatService).say();
+cazModule.getItemByType(CatService).say(); // will throw error

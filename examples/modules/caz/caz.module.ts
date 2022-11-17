@@ -1,17 +1,17 @@
-import { createLogger, Module, Service } from '@core/index';
+import { createLogger, Module, Service } from '@core';
 import { CatService, DogService, fooModule } from '../foo/foo.module';
 
 console.log('module loaded: ', __filename);
 
 export class RobotService extends Service {
-  logger = createLogger('ExampleTwoModule', 'RobotService');
+  logger = createLogger('CazModule', 'RobotService');
 
   constructor(private catService: CatService, private dogService: DogService) {
     super();
   }
 
   say() {
-    this.logger.log('its robot from example 2');
+    this.logger.log('its robot');
     this.logger.log(`cat code is ${this.catService.code}`);
     this.logger.log(`dog code is ${this.dogService.code}`);
   }
