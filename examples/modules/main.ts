@@ -29,4 +29,5 @@ console.log('dogService is ModuleItem', dogService instanceof ModuleItem);
 
 console.log();
 cazModule.getItemByType(RobotService).say();
+console.log('cazModule imports:', cazModule.getImports());
 cazModule.getItemByType(CatService).say(); // will throw error

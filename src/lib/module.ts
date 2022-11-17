@@ -1,24 +1,40 @@
 import { Class, getClassName } from './stuff';
 
+const symbolModuleTypeId = Symbol('moduleTypeId');
+const symbolModuleImports = Symbol('moduleImports');
+
 export abstract class Module {
-  getItemByType<T>(moduleItem: Class<T>) {
+  private [symbolModuleImports] = [];
+
+  getItemByType<T>(moduleItemType: Class<T>) {
     for (const itemKey in this) {
-      if (this[itemKey] instanceof moduleItem) {
+      if (this[itemKey] instanceof moduleItemType) {
         return this[itemKey] as T;
       }
     }
-    throw `${getClassName(moduleItem)} not found in ${getClassName(
+    throw `${getClassName(moduleItemType)} not found in ${getClassName(
       this.constructor
     )}`;
+  }
+
+  protected useImport<T>(importModuleType: Class<T>) {
+    const moduleImport = useModule(importModuleType);
+
+    if (this[symbolModuleImports].indexOf(moduleImport) === -1) {
+      this[symbolModuleImports].push(moduleImport);
+    }
+
+    return moduleImport;
+  }
+
+  getImports() {
+    return this[symbolModuleImports].map((x) => x) as Module[];
   }
 }
 
 export abstract class ModuleItem {
   constructor() {}
 }
-
-const symbolModuleTypeId = Symbol('moduleTypeId');
-const symbolModuleImports = Symbol('moduleImports');
 
 let modulesTypesCount = 0;
 const modules = {} as {
@@ -38,22 +54,4 @@ export function useModule<T>(moduleType: Class<T>) {
     modules[moduleTypeId] = new moduleType();
   }
   return modules[moduleTypeId] as T;
-}
-
-export function useModuleForImport<T>(
-  moduleForImport: Module,
-  importModuleType: Class<T>
-) {
-  const moduleImport = useModule(importModuleType);
-
-  let moduleImports = moduleForImport[symbolModuleImports] as any[];
-  if (!moduleImports) {
-    moduleImports = moduleForImport[symbolModuleImports] = [];
-  }
-
-  if (moduleImports.indexOf(moduleImport) === -1) {
-    moduleImports.push(moduleImport);
-  }
-
-  return moduleImport;
 }
