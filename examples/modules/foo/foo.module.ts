@@ -1,4 +1,5 @@
 import { Module, createLogger, Service } from '@core';
+import { CazModule } from '../caz/caz.module';
 
 console.log('module loaded: ', __filename);
 
@@ -29,14 +30,16 @@ export class DogService extends Service {
 }
 
 export class FooModule extends Module {
-  catService: CatService;
-  dogService: DogService;
+  catService = {} as CatService;
+  dogService = {} as DogService;
 
   constructor() {
     super();
+  }
 
+  async onInit() {
     const _dogService = {};
-    this.catService = new CatService(_dogService as DogService);
+    this.catService = new CatService(this.dogService);
     this.dogService = new DogService(this.catService);
     Object.assign(_dogService, this.dogService);
   }

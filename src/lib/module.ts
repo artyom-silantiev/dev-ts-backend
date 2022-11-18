@@ -1,5 +1,5 @@
 import { Class, getClassName } from './stuff';
-import { symbolModuleImports, symbolModuleTypeId } from './symbols';
+import { symbolModuleApp, symbolModuleImports } from './symbols';
 
 export abstract class Module {
   constructor() {
@@ -17,8 +17,10 @@ export abstract class Module {
     )}`;
   }
 
-  protected useImport<T>(importModuleType: Class<T>) {
-    const moduleImport = useModule(importModuleType);
+  protected async useImport<T>(importModuleType: Class<T>) {
+    const app = Reflect.getMetadata(symbolModuleApp, this);
+
+    const moduleImport = await app.useModule(importModuleType);
 
     const moduleImports = Reflect.getMetadata(
       symbolModuleImports,
@@ -35,29 +37,10 @@ export abstract class Module {
     const moduleImports = Reflect.getMetadata(symbolModuleImports, this);
     return moduleImports.map((x) => x) as Module[];
   }
+
+  abstract onInit(): Promise<void>;
 }
 
 export abstract class ModuleItem {
   constructor() {}
-}
-
-let modulesTypesCount = 0;
-const modules = {} as {
-  [moduleId: number]: any;
-};
-
-export function useModule<T>(moduleType: Class<T>) {
-  if (!Reflect.hasMetadata(symbolModuleTypeId, moduleType)) {
-    const moduleTypeId = modulesTypesCount++;
-    Reflect.defineMetadata(symbolModuleTypeId, moduleTypeId, moduleType);
-  }
-
-  const moduleTypeId = Reflect.getMetadata(
-    symbolModuleTypeId,
-    moduleType
-  ) as number;
-  if (!modules[moduleTypeId]) {
-    modules[moduleTypeId] = new moduleType();
-  }
-  return modules[moduleTypeId] as T;
 }

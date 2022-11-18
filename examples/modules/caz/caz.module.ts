@@ -22,9 +22,10 @@ export class CazModule extends Module {
 
   constructor() {
     super();
+  }
 
-    const { catService, dogService } = this.useImport(FooModule);
-
+  async onInit() {
+    const { catService, dogService } = await this.useImport(FooModule);
     this.robotService = new RobotService(catService, dogService);
   }
 }
