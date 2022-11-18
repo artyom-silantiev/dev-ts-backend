@@ -1,4 +1,4 @@
-import { createLogger, Module, Service } from '@core';
+import { createLogger, mergeType, Module, Service } from '@core';
 import { CatService, DogService, FooModule } from '../foo/foo.module';
 
 console.log('module loaded: ', __filename);
@@ -18,14 +18,14 @@ export class RobotService extends Service {
 }
 
 export class CazModule extends Module {
-  robotService: RobotService;
+  robotService = {} as RobotService;
 
   constructor() {
     super();
   }
 
-  async onInit() {
-    const { catService, dogService } = await this.useImport(FooModule);
-    this.robotService = new RobotService(catService, dogService);
+  onStructInit() {
+    const { catService, dogService } = this.useImport(FooModule);
+    mergeType(this.robotService, new RobotService(catService, dogService));
   }
 }

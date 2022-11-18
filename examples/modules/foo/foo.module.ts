@@ -1,4 +1,4 @@
-import { Module, createLogger, Service } from '@core';
+import { Module, createLogger, Service, mergeType } from '@core';
 import { CazModule } from '../caz/caz.module';
 
 console.log('module loaded: ', __filename);
@@ -37,10 +37,9 @@ export class FooModule extends Module {
     super();
   }
 
-  async onInit() {
-    const _dogService = {};
-    this.catService = new CatService(this.dogService);
-    this.dogService = new DogService(this.catService);
-    Object.assign(_dogService, this.dogService);
+  onStructInit() {
+    this.useImport(CazModule);
+    mergeType(this.catService, new CatService(this.dogService));
+    mergeType(this.dogService, new DogService(this.catService));
   }
 }

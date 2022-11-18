@@ -18,8 +18,8 @@ class App extends Application {
   }
 
   async bootstrap() {
-    this.fooModule = await this.useModule(FooModule);
-    this.cazModule = await this.useModule(CazModule);
+    this.fooModule = this.useModule(FooModule);
+    this.cazModule = this.useModule(CazModule);
 
     console.log();
     this.fooModule.getItemByType(CatService).say();

@@ -10,7 +10,7 @@ export abstract class Application {
 
   constructor() {}
 
-  async useModule<T>(moduleType: Class<T>) {
+  useModule<T>(moduleType: Class<T>) {
     if (!Reflect.hasMetadata(symbolModuleTypeId, moduleType)) {
       const moduleTypeId = modulesTypesCount++;
       Reflect.defineMetadata(symbolModuleTypeId, moduleTypeId, moduleType);
@@ -24,8 +24,7 @@ export abstract class Application {
       const newModule = new moduleType() as Module;
       this.context.modules[moduleTypeId] = newModule;
       Reflect.defineMetadata(symbolModuleApp, this, newModule);
-
-      await newModule.onInit();
+      newModule.onStructInit();
     }
     return this.context.modules[moduleTypeId] as T;
   }

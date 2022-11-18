@@ -1,3 +1,4 @@
+import { Application } from './app';
 import { Class, getClassName } from './stuff';
 import { symbolModuleApp, symbolModuleImports } from './symbols';
 
@@ -17,10 +18,10 @@ export abstract class Module {
     )}`;
   }
 
-  protected async useImport<T>(importModuleType: Class<T>) {
-    const app = Reflect.getMetadata(symbolModuleApp, this);
+  protected useImport<T>(importModuleType: Class<T>) {
+    const app = Reflect.getMetadata(symbolModuleApp, this) as Application;
 
-    const moduleImport = await app.useModule(importModuleType);
+    const moduleImport = app.useModule(importModuleType);
 
     const moduleImports = Reflect.getMetadata(
       symbolModuleImports,
@@ -38,7 +39,7 @@ export abstract class Module {
     return moduleImports.map((x) => x) as Module[];
   }
 
-  abstract onInit(): Promise<void>;
+  abstract onStructInit(): void;
 }
 
 export abstract class ModuleItem {

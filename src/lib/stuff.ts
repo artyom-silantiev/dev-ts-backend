@@ -9,3 +9,9 @@ export function getClassName(obj: { toString(): string }) {
     return obj.toString();
   }
 }
+
+export function mergeType<T>(obj: any, newObj: any) {
+  Object.assign(obj, newObj);
+  obj.__proto__ = newObj.__proto__;
+  newObj = null;
+}

@@ -4,3 +4,4 @@ export { Router } from './lib/router';
 export { Controller } from './lib/controller';
 export { Service } from './lib/service';
 export { createLogger } from './lib/logger';
+export { mergeType } from './lib/stuff';
