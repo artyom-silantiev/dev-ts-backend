@@ -2,7 +2,9 @@ import { Class, getClassName } from './stuff';
 import { symbolModuleImports, symbolModuleTypeId } from './symbols';
 
 export abstract class Module {
-  private [symbolModuleImports] = [];
+  constructor() {
+    Reflect.defineMetadata(symbolModuleImports, [], this);
+  }
 
   getItemByType<T>(moduleItemType: Class<T>) {
     for (const itemKey in this) {
@@ -18,15 +20,20 @@ export abstract class Module {
   protected useImport<T>(importModuleType: Class<T>) {
     const moduleImport = useModule(importModuleType);
 
-    if (this[symbolModuleImports].indexOf(moduleImport) === -1) {
-      this[symbolModuleImports].push(moduleImport);
+    const moduleImports = Reflect.getMetadata(
+      symbolModuleImports,
+      this
+    ) as any[];
+    if (moduleImports.indexOf(moduleImport) === -1) {
+      moduleImports.push(moduleImport);
     }
 
     return moduleImport;
   }
 
   getImports() {
-    return this[symbolModuleImports].map((x) => x) as Module[];
+    const moduleImports = Reflect.getMetadata(symbolModuleImports, this);
+    return moduleImports.map((x) => x) as Module[];
   }
 }
 
@@ -36,18 +43,19 @@ export abstract class ModuleItem {
 
 let modulesTypesCount = 0;
 const modules = {} as {
-  [moduleHash: string]: any;
+  [moduleId: number]: any;
 };
 
 export function useModule<T>(moduleType: Class<T>) {
-  if (!Object.hasOwn(moduleType, symbolModuleTypeId)) {
+  if (!Reflect.hasMetadata(symbolModuleTypeId, moduleType)) {
     const moduleTypeId = modulesTypesCount++;
-    Object.defineProperty(moduleType, symbolModuleTypeId, {
-      value: moduleTypeId,
-    });
+    Reflect.defineMetadata(symbolModuleTypeId, moduleTypeId, moduleType);
   }
 
-  const moduleTypeId = moduleType[symbolModuleTypeId];
+  const moduleTypeId = Reflect.getMetadata(
+    symbolModuleTypeId,
+    moduleType
+  ) as number;
   if (!modules[moduleTypeId]) {
     modules[moduleTypeId] = new moduleType();
   }

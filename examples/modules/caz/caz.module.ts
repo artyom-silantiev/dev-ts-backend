@@ -26,7 +26,5 @@ export class CazModule extends Module {
     const { catService, dogService } = this.useImport(FooModule);
 
     this.robotService = new RobotService(catService, dogService);
-
-    console.log();
   }
 }
